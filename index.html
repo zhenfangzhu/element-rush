@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="通过短回合挑战和元素周期表定位，轻松记住化学元素。" />
+    <title>元素冲冲冲｜周期表记忆游戏</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#game">跳到游戏</a>
+    <div class="page-shell">
+      <header class="topbar" aria-label="主导航">
+        <a class="brand" href="#" aria-label="元素冲冲冲首页">
+          <span class="brand-mark" aria-hidden="true">H</span>
+          <span>元素冲冲冲</span>
+        </a>
+        <div class="top-actions">
+          <button class="top-button" id="recordsButton" type="button">排行榜</button>
+          <button class="icon-button" id="soundButton" type="button" aria-label="关闭音效" title="音效">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6.8 8.5H3v7h3.8L11 19V5Zm4.4 3.2a5.4 5.4 0 0 1 0 7.6M18 5.5a9 9 0 0 1 0 13"/></svg>
+          </button>
+          <button class="secondary-button" id="howButton" type="button">怎么玩</button>
+        </div>
+      </header>
+
+      <main id="game">
+        <section class="hero">
+          <div class="hero-copy">
+            <span class="eyebrow"><span class="pulse-dot"></span> 每天 5 分钟，元素不再混</span>
+            <h1>把周期表<br /><span>玩进脑子里。</span></h1>
+            <p>看符号、认名字、找位置。每轮只要 60 秒，让 118 个元素从陌生人变成老朋友。</p>
+            <div class="hero-stats" aria-label="学习统计">
+              <div><strong id="bestScore">0</strong><span>历史最高分</span></div>
+              <div><strong id="masteredCount">0</strong><span>已认识元素</span></div>
+              <div><strong id="dayStreak">1</strong><span>连续学习天</span></div>
+            </div>
+          </div>
+
+          <div class="atom-art" aria-hidden="true">
+            <div class="orbit orbit-one"><i></i></div>
+            <div class="orbit orbit-two"><i></i></div>
+            <div class="orbit orbit-three"><i></i></div>
+            <div class="nucleus"><small>8</small><b>O</b><span>氧</span></div>
+            <span class="spark spark-one"></span><span class="spark spark-two"></span>
+          </div>
+        </section>
+
+        <section class="game-card" aria-labelledby="game-title">
+          <div class="game-head">
+            <div>
+              <span class="section-kicker">CHOOSE YOUR MISSION</span>
+              <h2 id="game-title">选择今天的任务</h2>
+            </div>
+            <div class="level-pill"><span>LEVEL</span><strong id="levelNumber">01</strong></div>
+          </div>
+
+          <div class="mode-grid" id="modeGrid">
+            <button class="mode-card active" type="button" data-mode="symbol">
+              <span class="mode-icon tile-icon"><small>26</small><b>Fe</b></span>
+              <span class="mode-copy"><strong>符号速答</strong><small>看符号，猜元素</small></span>
+              <span class="mode-tag">推荐</span>
+            </button>
+            <button class="mode-card" type="button" data-mode="number">
+              <span class="mode-icon number-icon">12</span>
+              <span class="mode-copy"><strong>序号侦探</strong><small>看序号，找元素</small></span>
+              <span class="mode-tag">进阶</span>
+            </button>
+            <button class="mode-card" type="button" data-mode="position">
+              <span class="mode-icon grid-icon"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+              <span class="mode-copy"><strong>位置拼图</strong><small>找出它在周期表的位置</small></span>
+              <span class="mode-tag">挑战</span>
+            </button>
+            <button class="mode-card" type="button" data-mode="duo">
+              <span class="mode-icon duo-icon">VS</span>
+              <span class="mode-copy"><strong>双人对战</strong><small>局域网 PK，看谁更快</small></span>
+              <span class="mode-tag">新</span>
+            </button>
+          </div>
+
+          <div class="setup-row">
+            <label for="rangeSelect">元素范围</label>
+            <div class="select-wrap">
+              <select id="rangeSelect">
+                <option value="20">前 20 个 · 入门</option>
+                <option value="36">前 36 个 · 熟练</option>
+                <option value="54">前 54 个 · 高手</option>
+                <option value="118">全部 118 个 · 大师</option>
+              </select>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+            </div>
+            <button class="primary-button" id="startButton" type="button">
+              开始挑战
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+        </section>
+
+        <section class="table-preview" aria-labelledby="table-title">
+          <div class="preview-head">
+            <div><span class="section-kicker">YOUR MAP</span><h2 id="table-title">元素探索地图</h2></div>
+            <div class="preview-meta">
+              <p>答对的元素会被点亮。<strong id="mapProgress">0 / 118</strong></p>
+              <button class="reset-map-button" id="resetMapButton" type="button">重置点亮</button>
+            </div>
+          </div>
+          <div class="periodic-wrap">
+            <div class="periodic-table" id="periodicTable" aria-label="元素周期表探索进度"></div>
+          </div>
+          <div class="legend" aria-label="元素分类图例">
+            <span><i class="alkali"></i>金属</span><span><i class="nonmetal"></i>非金属</span><span><i class="noble"></i>稀有气体</span><span><i class="other"></i>其他</span>
+          </div>
+        </section>
+      </main>
+
+      <footer><span>元素冲冲冲</span><p>今天多记一个，考试少慌一点。</p></footer>
+    </div>
+
+    <div class="modal" id="quizModal" role="dialog" aria-modal="true" aria-labelledby="quizHeading" hidden>
+      <div class="modal-backdrop"></div>
+      <div class="quiz-panel">
+        <div class="quiz-top">
+          <button class="close-button" id="closeQuiz" type="button" aria-label="退出挑战">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+          </button>
+          <div class="progress-track"><i id="quizProgress"></i></div>
+          <div class="lives" id="lives" aria-label="剩余三次机会"></div>
+        </div>
+        <div class="score-strip"><span>得分 <strong id="score">0</strong></span><span class="combo" id="combo">连击 × 0</span><span>第 <strong id="round">1</strong>/10 题</span></div>
+        <div class="duo-hud" id="duoHud" hidden>
+          <div class="duo-side duo-self"><span>你</span><strong id="selfScoreDuo">0</strong><div class="duo-bar"><i id="selfProgressDuo"></i></div></div>
+          <div class="duo-center"><div class="duo-vs">VS</div><div class="duo-timer" id="duoTimer">60</div></div>
+          <div class="duo-side duo-opp"><span id="opponentName">对手</span><strong id="opponentScore">0</strong><div class="duo-bar"><i id="opponentProgress"></i></div></div>
+        </div>
+        <div class="question-area">
+          <p id="questionHint">这个元素符号代表什么？</p>
+          <div class="question-tile" id="questionTile"><small id="questionNumber">1</small><b id="questionMain">H</b><span id="questionSub">?</span></div>
+          <h2 id="quizHeading">选出正确答案</h2>
+        </div>
+        <div class="answers" id="answers"></div>
+        <div class="feedback" id="feedback" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <div class="modal" id="resultModal" role="dialog" aria-modal="true" aria-labelledby="resultTitle" hidden>
+      <div class="modal-backdrop"></div>
+      <div class="result-panel">
+        <div class="result-badge" id="resultBadge">A</div>
+        <span class="section-kicker">MISSION COMPLETE</span>
+        <h2 id="resultTitle">这一轮很稳！</h2>
+        <p id="resultCopy">你又点亮了一批元素。</p>
+        <div class="result-score"><strong id="finalScore">0</strong><span>本轮得分</span></div>
+        <div class="result-stats"><span>答对 <b id="correctCount">0 / 10</b></span><span>最高连击 <b id="maxCombo">0</b></span><span>用时 <b id="resultTime">0</b> 秒</span></div>
+        <div class="result-actions"><button class="secondary-button" id="resultClose" type="button">回到首页</button><button class="primary-button" id="againButton" type="button">再来一轮</button></div>
+      </div>
+    </div>
+
+    <div class="modal" id="howModal" role="dialog" aria-modal="true" aria-labelledby="howTitle" hidden>
+      <div class="modal-backdrop"></div>
+      <div class="how-panel">
+        <button class="close-button" id="closeHow" type="button" aria-label="关闭玩法说明"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+        <span class="section-kicker">HOW TO PLAY</span><h2 id="howTitle">三步玩懂</h2>
+        <ol><li><b>选任务</b><span>从符号、序号或位置中选一种练习。</span></li><li><b>冲连击</b><span>连续答对会获得越来越高的分数。</span></li><li><b>点亮地图</b><span>每个答对的元素都会永久记录在探索地图。</span></li></ol>
+        <button class="primary-button" id="gotItButton" type="button">懂了，开玩</button>
+      </div>
+    </div>
+    <div class="modal" id="duoModal" role="dialog" aria-modal="true" aria-labelledby="duoTitle" hidden>
+      <div class="modal-backdrop"></div>
+      <div class="duo-panel">
+        <button class="close-button" id="closeDuo" type="button" aria-label="关闭双人对战"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+        <span class="section-kicker">DUO</span>
+        <h2 id="duoTitle">双人对战</h2>
+        <div id="duoIntro">
+          <p class="duo-note">先双击运行文件夹里的 <b>start-duo-server.bat</b> 启动服务器。</p>
+          <p class="duo-ip" id="duoIpDisplay">本机地址：启动服务器后即可查看</p>
+          <div class="duo-mode-select">
+            <span>题目类型</span>
+            <button class="duo-mode-btn active" id="duoModeSymbol" type="button">符号速答</button>
+            <button class="duo-mode-btn" id="duoModeNumber" type="button">序号侦探</button>
+          </div>
+          <div class="duo-actions">
+            <button class="primary-button" id="duoCreate" type="button">创建房间</button>
+            <div class="duo-join-row">
+              <input id="duoCodeInput" type="text" maxlength="4" placeholder="房间号" autocomplete="off" />
+              <button class="secondary-button" id="duoJoin" type="button">加入</button>
+            </div>
+          </div>
+        </div>
+        <div class="duo-wait" id="duoWait" hidden>
+          <p>你的房间号：<strong class="duo-code" id="duoCodeDisplay"></strong></p>
+          <p>让好友在另一台设备输入上方房间号加入</p>
+          <p class="duo-status" id="duoStatus">等待对手加入…</p>
+          <button class="primary-button" id="duoReady" type="button" disabled>准备</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="recordsModal" role="dialog" aria-modal="true" aria-labelledby="recordsTitle" hidden>
+      <div class="modal-backdrop"></div>
+      <div class="records-panel">
+        <button class="close-button" id="closeRecords" type="button" aria-label="关闭排行榜"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+        <span class="section-kicker">RECORDS</span>
+        <h2 id="recordsTitle">排行榜</h2>
+        <div class="records-name">
+          <label for="playerNameInput">当前玩家</label>
+          <input id="playerNameInput" type="text" maxlength="6" placeholder="输入名字" autocomplete="off" />
+        </div>
+        <div class="records-tabs" aria-label="排行榜分类">
+          <button class="records-tab active" type="button" data-tab="speed">最快</button>
+          <button class="records-tab" type="button" data-tab="accuracy">正确率</button>
+          <button class="records-tab" type="button" data-tab="score">得分</button>
+        </div>
+        <ol class="records-list" id="recordsList"></ol>
+        <p class="records-empty" id="recordsEmpty">还没有记录，去玩一轮吧</p>
+        <button class="primary-button" id="recordsDone" type="button">知道了</button>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
