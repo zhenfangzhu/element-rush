@@ -45,6 +45,8 @@ document.querySelectorAll('.mode-card').forEach(btn=>btn.addEventListener('click
   $('levelNumber').textContent=mode==='symbol'?'01':mode==='number'?'02':mode==='position'?'03':'VS';
 }));
 
+function shuffle(arr){return [...arr].sort(()=>Math.random()-.5)}
+
 function startGame(){
   duoMode = false;
   if ($('duoHud')) $('duoHud').hidden = true;
