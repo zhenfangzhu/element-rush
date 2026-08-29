@@ -8,9 +8,9 @@
 > *When was the last time you thought about the Periodic Table? Do you still remember it?*
 
 <p align="center">
-  <img src="assets/creator.jpg" alt="小创作者 孙修宇 与《元素冲冲冲》" width="560" style="border-radius: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.15);" />
+  <img src="assets/creator.jpg" alt="小创作者 与《元素冲冲冲》" width="560" style="border-radius: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.15);" />
   <br />
-  <em>小学三年级的小朋友 · 孙修宇 在现场展示与体验由自己构思设计的《元素冲冲冲》</em>
+  <em>小学三年级的小朋友在现场展示与体验由自己构思设计的《元素冲冲冲》</em>
 </p>
 
 </div>
@@ -19,7 +19,7 @@
 
 ## 🇨🇳 中文介绍
 
-这是一个由**开学三年级的小朋友（孙修宇）**提出想法、设计玩法，并在 AI 结对编程协作下完成的化学元素周期表记忆游戏。
+这是一个由**开学三年级的小朋友**提出想法、设计玩法，并在 AI 结对编程协作下完成的化学元素周期表记忆游戏。
 
 它把原本枯燥的“死记硬背元素周期表”变成了趣味十足的短回合闯关：**看符号、认名字、找位置**，在轻松的游戏过程中让 118 个化学元素从陌生人变成老朋友。
 
@@ -42,7 +42,7 @@
 
 ### 👦 小创作者（Creator）
 
-- **创意与设计**：孙修宇（开学小学三年级）
+- **创意与设计**：一名开学小学三年级的小朋友
 - **创作初衷**：觉得死记硬背周期表太无聊，希望做成一个好玩、能跟同学比速度的闯关游戏。
 - **开发过程**：小朋友提出完整玩法规则与交互构想，与 AI 结对编程独立协作完成。
 
@@ -56,7 +56,7 @@
 
 ## 🌍 English Version
 
-**Element Rush** is a fun, interactive Periodic Table learning and speed-challenge web game conceived and designed by **Sun Xiuyu (a 3rd grade elementary school student)** and built in collaboration with AI pair programming.
+**Element Rush** is a fun, interactive Periodic Table learning and speed-challenge web game conceived and designed by **a 3rd grade elementary school student** and built in collaboration with AI pair programming.
 
 It transforms tedious chemistry memorization into exciting, bite-sized 60-second challenges: **recognizing atomic symbols, identifying atomic numbers, and pinpointing positions on the periodic table**.
 
@@ -79,7 +79,7 @@ It transforms tedious chemistry memorization into exciting, bite-sized 60-second
 
 ### 👦 The Young Creator
 
-- **Creator & Game Designer**: Sun Xiuyu (3rd Grade Student)
+- **Creator & Game Designer**: A 3rd Grade Elementary Student
 - **Inspiration**: Wanted to make memorizing chemistry fun and engaging so kids and students can race with classmates instead of memorizing dry charts.
 - **How it was built**: The student conceived the rules, visual layout, and game flow, pairing with AI to write and refine the production-ready code.
 
