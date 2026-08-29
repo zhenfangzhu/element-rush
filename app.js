@@ -135,51 +135,120 @@ $('resetMapButton').addEventListener('click',()=>{
     setTimeout(()=>{btn.dataset.confirm='';btn.textContent='重置点亮'},3000);
   }
 });
-/* 排行榜 */
-const records=JSON.parse(localStorage.getItem('elementRecords')||'[]');
-let roundStart=0,recordsTab='speed';
+/* 排行榜 (支持 Supabase 全网实时同步 + 本地 localStorage 兜底) */
+const SUPABASE_URL = 'https://njthlbrqdpcxhonfushu.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_IJ45ZThvMVZeaWwTG46TAw_Elk9Neqd';
 
-function saveRecords(){localStorage.setItem('elementRecords',JSON.stringify(records))}
+const records = JSON.parse(localStorage.getItem('elementRecords') || '[]');
+let roundStart = 0, recordsTab = 'speed';
 
-function recordRound(score,correct,time){
-  const name=localStorage.getItem('elementPlayerName')||'神秘玩家';
-  records.push({name,score,correct,time,date:new Date().toISOString().slice(0,10)});
-  if(records.length>100)records.splice(0,records.length-100);
-  saveRecords();
+function saveRecords() {
+  localStorage.setItem('elementRecords', JSON.stringify(records));
 }
 
-function renderRecords(){
-  const list=$('recordsList'),empty=$('recordsEmpty');
-  const all=[...records];
-  let top=[];
-  if(recordsTab==='speed')top=all.filter(r=>r.correct>=8).sort((a,b)=>a.time-b.time).slice(0,5);
-  else if(recordsTab==='accuracy')top=all.sort((a,b)=>b.correct-a.correct||a.time-b.time).slice(0,5);
-  else top=all.sort((a,b)=>b.score-a.score||a.time-b.time).slice(0,5);
-  list.innerHTML='';
-  if(top.length===0){
-    empty.hidden=false;
-    empty.textContent=records.length===0?'还没有记录，去玩一轮吧':(recordsTab==='speed'?'暂无速度记录：答对 8 题以上才会进入最快榜':'暂无记录');
+async function recordRound(score, correct, time) {
+  const name = localStorage.getItem('elementPlayerName') || '神秘玩家';
+  const localEntry = { name, score, correct, time, date: new Date().toISOString().slice(0, 10) };
+  records.push(localEntry);
+  if (records.length > 100) records.splice(0, records.length - 100);
+  saveRecords();
+
+  // 异步上传至 Supabase 全网公共排行榜
+  try {
+    fetch(`${SUPABASE_URL}/rest/v1/leaderboard`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        player_name: name,
+        score: Number(score),
+        correct: Number(correct),
+        time_seconds: Number(time),
+        mode: (typeof mode !== 'undefined' ? mode : 'symbol')
+      })
+    }).catch(e => console.warn('Supabase sync error:', e));
+  } catch (e) {
+    console.warn('Supabase record failed:', e);
+  }
+}
+
+async function fetchCloudRecords(tab) {
+  try {
+    let query = '';
+    if (tab === 'speed') {
+      query = 'select=*&correct=gte.8&order=time_seconds.asc,correct.desc&limit=10';
+    } else if (tab === 'accuracy') {
+      query = 'select=*&order=correct.desc,time_seconds.asc&limit=10';
+    } else {
+      query = 'select=*&order=score.desc,time_seconds.asc&limit=10';
+    }
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/leaderboard?${query}`, {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`
+      }
+    });
+    if (!res.ok) throw new Error('Cloud fetch failed');
+    const data = await res.json();
+    return data.map(d => ({
+      name: d.player_name,
+      score: d.score,
+      correct: d.correct,
+      time: Number(d.time_seconds)
+    }));
+  } catch (e) {
+    return null;
+  }
+}
+
+function renderList(top, list, empty) {
+  list.innerHTML = '';
+  if (!top || top.length === 0) {
+    empty.hidden = false;
+    empty.textContent = recordsTab === 'speed' ? '暂无速度记录：答对 8 题以上才会进入最快榜' : '暂无记录，去玩一轮吧';
     return;
   }
-  empty.hidden=true;
-  top.forEach((r,i)=>{
-    const li=document.createElement('li');
-    const medal=document.createElement('i');
-    medal.className=`rank-medal${i<3?` rank-${i+1}`:''}`;
-    medal.textContent=String(i+1);
-    const player=document.createElement('span');
-    player.className='rname';
-    player.textContent=String(r.name||'神秘玩家');
-    const value=document.createElement('span');
-    value.className='rval';
-    const detail=document.createElement('span');
-    detail.className='rsub';
-    if(recordsTab==='speed'){value.textContent=`${r.time} 秒`;detail.textContent=`答对 ${r.correct}/10`;}
-    if(recordsTab==='accuracy'){value.textContent=`${r.correct}/10 题`;detail.textContent=`用时 ${r.time} 秒`;}
-    if(recordsTab==='score'){value.textContent=`${r.score} 分`;detail.textContent=`答对 ${r.correct}/10`;}
-    li.append(medal,player,value,detail);
+  empty.hidden = true;
+  top.forEach((r, i) => {
+    const li = document.createElement('li');
+    const medal = document.createElement('i');
+    medal.className = `rank-medal${i < 3 ? ` rank-${i + 1}` : ''}`;
+    medal.textContent = String(i + 1);
+    const player = document.createElement('span');
+    player.className = 'rname';
+    player.textContent = String(r.name || '神秘玩家');
+    const value = document.createElement('span');
+    value.className = 'rval';
+    const detail = document.createElement('span');
+    detail.className = 'rsub';
+    if (recordsTab === 'speed') { value.textContent = `${r.time} 秒`; detail.textContent = `答对 ${r.correct}/10`; }
+    if (recordsTab === 'accuracy') { value.textContent = `${r.correct}/10 题`; detail.textContent = `用时 ${r.time} 秒`; }
+    if (recordsTab === 'score') { value.textContent = `${r.score} 分`; detail.textContent = `答对 ${r.correct}/10`; }
+    li.append(medal, player, value, detail);
     list.appendChild(li);
   });
+}
+
+async function renderRecords() {
+  const list = $('recordsList'), empty = $('recordsEmpty');
+  
+  // 1. 先用本地数据毫秒级展示
+  const all = [...records];
+  let localTop = [];
+  if (recordsTab === 'speed') localTop = all.filter(r => r.correct >= 8).sort((a, b) => a.time - b.time).slice(0, 10);
+  else if (recordsTab === 'accuracy') localTop = all.sort((a, b) => b.correct - a.correct || a.time - b.time).slice(0, 10);
+  else localTop = all.sort((a, b) => b.score - a.score || a.time - b.time).slice(0, 10);
+  renderList(localTop, list, empty);
+
+  // 2. 异步拉取 Supabase 全网实时排行榜刷新
+  const cloudData = await fetchCloudRecords(recordsTab);
+  if (cloudData && cloudData.length > 0) {
+    renderList(cloudData, list, empty);
+  }
 }
 
 $('recordsButton').addEventListener('click',()=>{$('recordsModal').hidden=false;document.body.style.overflow='hidden';renderRecords();$('closeRecords').focus()});
