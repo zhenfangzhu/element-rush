@@ -148,10 +148,10 @@ function saveRecords() {
 
 async function recordRound(score, correct, time) {
   const name = localStorage.getItem('elementPlayerName') || '神秘玩家';
-  const mode = currentMode || 'symbol';
-  const localEntry = { name, score, correct, time, mode, date: new Date().toISOString().slice(0, 10) };
+  const playMode = (typeof mode === 'string' && ['symbol', 'number', 'position'].includes(mode)) ? mode : 'symbol';
+  const localEntry = { name, score, correct, time, mode: playMode, date: new Date().toISOString().slice(0, 10) };
   records.push(localEntry);
-  if (records.length > 100) records.splice(0, records.length - 100);
+  if (records.length > 200) records.splice(0, records.length - 200);
   saveRecords();
 
   // 异步上传至 Supabase 全网公共排行榜
@@ -169,7 +169,7 @@ async function recordRound(score, correct, time) {
         score: Number(score),
         correct: Number(correct),
         time_seconds: Number(time),
-        mode: mode
+        mode: playMode
       })
     });
   } catch (e) {
@@ -272,12 +272,14 @@ async function renderRecords(showLoading = false) {
 $('recordsButton').addEventListener('click', () => {
   $('recordsModal').hidden = false;
   document.body.style.overflow = 'hidden';
-  if (['symbol', 'number', 'position'].includes(currentMode)) {
-    recordsModeTab = currentMode;
-    document.querySelectorAll('.record-mode-tab').forEach(t => {
-      t.classList.toggle('active', t.dataset.mode === recordsModeTab);
-    });
+  if (typeof mode === 'string' && ['symbol', 'number', 'position'].includes(mode)) {
+    recordsModeTab = mode;
+  } else {
+    recordsModeTab = 'symbol';
   }
+  document.querySelectorAll('.record-mode-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.mode === recordsModeTab);
+  });
   renderRecords(true);
   $('closeRecords').focus();
 });
