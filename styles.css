@@ -1047,6 +1047,38 @@ footer p {
   box-shadow: 2px 2px 0 var(--ink);
 }
 
+.records-mode-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 12px 0 10px;
+  background: var(--surface-alt);
+  padding: 4px;
+  border-radius: 14px;
+  border: 1.5px solid var(--border);
+}
+.record-mode-tab {
+  flex: 1;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  padding: 8px 6px;
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--muted);
+  transition: all .15s ease;
+  white-space: nowrap;
+}
+.record-mode-tab:hover {
+  color: var(--ink);
+}
+.record-mode-tab.active {
+  background: #ffffff;
+  color: var(--ink);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  border: 1.5px solid var(--ink);
+}
+
 .records-header-row {
   display: flex;
   align-items: center;

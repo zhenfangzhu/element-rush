@@ -140,7 +140,7 @@ const SUPABASE_URL = 'https://njthlbrqdpcxhonfushu.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_IJ45ZThvMVZeaWwTG46TAw_Elk9Neqd';
 
 const records = JSON.parse(localStorage.getItem('elementRecords') || '[]');
-let roundStart = 0, recordsTab = 'speed';
+let roundStart = 0, recordsTab = 'speed', recordsModeTab = 'symbol';
 
 function saveRecords() {
   localStorage.setItem('elementRecords', JSON.stringify(records));
@@ -148,7 +148,8 @@ function saveRecords() {
 
 async function recordRound(score, correct, time) {
   const name = localStorage.getItem('elementPlayerName') || '神秘玩家';
-  const localEntry = { name, score, correct, time, date: new Date().toISOString().slice(0, 10) };
+  const mode = currentMode || 'symbol';
+  const localEntry = { name, score, correct, time, mode, date: new Date().toISOString().slice(0, 10) };
   records.push(localEntry);
   if (records.length > 100) records.splice(0, records.length - 100);
   saveRecords();
@@ -168,7 +169,7 @@ async function recordRound(score, correct, time) {
         score: Number(score),
         correct: Number(correct),
         time_seconds: Number(time),
-        mode: (typeof mode !== 'undefined' ? mode : 'symbol')
+        mode: mode
       })
     });
   } catch (e) {
@@ -176,15 +177,16 @@ async function recordRound(score, correct, time) {
   }
 }
 
-async function fetchCloudRecords(tab) {
+async function fetchCloudRecords(tab, mode = 'symbol') {
   try {
+    const modeFilter = `mode=eq.${mode}`;
     let query = '';
     if (tab === 'speed') {
-      query = 'select=*&correct=gte.8&order=time_seconds.asc,correct.desc&limit=10';
+      query = `select=*&${modeFilter}&correct=gte.8&order=time_seconds.asc,correct.desc&limit=10`;
     } else if (tab === 'accuracy') {
-      query = 'select=*&order=correct.desc,time_seconds.asc&limit=10';
+      query = `select=*&${modeFilter}&order=correct.desc,time_seconds.asc&limit=10`;
     } else {
-      query = 'select=*&order=score.desc,time_seconds.asc&limit=10';
+      query = `select=*&${modeFilter}&order=score.desc,time_seconds.asc&limit=10`;
     }
     const res = await fetch(`${SUPABASE_URL}/rest/v1/leaderboard?${query}`, {
       headers: {
@@ -199,7 +201,8 @@ async function fetchCloudRecords(tab) {
       name: d.player_name,
       score: d.score,
       correct: d.correct,
-      time: Number(d.time_seconds)
+      time: Number(d.time_seconds),
+      mode: d.mode || 'symbol'
     }));
   } catch (e) {
     console.warn('Cloud fetch error:', e);
@@ -211,7 +214,11 @@ function renderList(top, list, empty) {
   list.innerHTML = '';
   if (!top || top.length === 0) {
     empty.hidden = false;
-    empty.textContent = recordsTab === 'speed' ? '暂无速度记录：答对 8 题以上才会进入最快榜' : '暂无记录，去玩一轮吧';
+    const modeNames = { symbol: '符号速答', number: '序号侦探', position: '位置拼图' };
+    const modeLabel = modeNames[recordsModeTab] || '当前模式';
+    empty.textContent = recordsTab === 'speed' 
+      ? `暂无【${modeLabel}】速度记录：答对 8 题以上进入最快榜` 
+      : `暂无【${modeLabel}】记录，去挑战一轮吧！`;
     return;
   }
   empty.hidden = true;
@@ -241,19 +248,22 @@ async function renderRecords(showLoading = false) {
     status.innerHTML = '<i class="sync-dot loading"></i> 正在拉取全网最新榜单...';
   }
 
-  // 1. 先用本地数据秒开
-  const all = [...records];
+  // 1. 先用本地对应模式的数据秒开
+  const all = records.filter(r => (r.mode || 'symbol') === recordsModeTab);
   let localTop = [];
   if (recordsTab === 'speed') localTop = all.filter(r => r.correct >= 8).sort((a, b) => a.time - b.time).slice(0, 10);
   else if (recordsTab === 'accuracy') localTop = all.sort((a, b) => b.correct - a.correct || a.time - b.time).slice(0, 10);
   else localTop = all.sort((a, b) => b.score - a.score || a.time - b.time).slice(0, 10);
   renderList(localTop, list, empty);
 
-  // 2. 异步拉取 Supabase 全网实时排行榜刷新
-  const cloudData = await fetchCloudRecords(recordsTab);
+  // 2. 异步拉取 Supabase 对应模式的全网实时排行榜刷新
+  const cloudData = await fetchCloudRecords(recordsTab, recordsModeTab);
   if (cloudData && cloudData.length > 0) {
     renderList(cloudData, list, empty);
     if (status) status.innerHTML = `<i class="sync-dot"></i> 全网数据已同步 (${cloudData.length}条)`;
+  } else if (cloudData && cloudData.length === 0) {
+    renderList([], list, empty);
+    if (status) status.innerHTML = '<i class="sync-dot"></i> 全网数据已同步 (暂无数据)';
   } else if (status) {
     status.innerHTML = '<i class="sync-dot offline"></i> 本地记录已载入';
   }
@@ -262,6 +272,12 @@ async function renderRecords(showLoading = false) {
 $('recordsButton').addEventListener('click', () => {
   $('recordsModal').hidden = false;
   document.body.style.overflow = 'hidden';
+  if (['symbol', 'number', 'position'].includes(currentMode)) {
+    recordsModeTab = currentMode;
+    document.querySelectorAll('.record-mode-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.mode === recordsModeTab);
+    });
+  }
   renderRecords(true);
   $('closeRecords').focus();
 });
@@ -287,6 +303,12 @@ $('playerNameInput').addEventListener('keydown', (e) => {
     closeModal('recordsModal');
   }
 });
+document.querySelectorAll('.record-mode-tab').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('.record-mode-tab').forEach(x => x.classList.remove('active'));
+  t.classList.add('active');
+  recordsModeTab = t.dataset.mode;
+  renderRecords(true);
+}));
 document.querySelectorAll('.records-tab').forEach(t => t.addEventListener('click', () => {
   document.querySelectorAll('.records-tab').forEach(x => x.classList.remove('active'));
   t.classList.add('active');
