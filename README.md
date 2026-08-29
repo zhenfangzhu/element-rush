@@ -8,7 +8,8 @@
 
 ## 在线体验
 
-- 🎮 **在线直接玩**：[https://zhenfangzhu.github.io/element-rush/](https://zhenfangzhu.github.io/element-rush/)
+- 🌟 **专属在线地址**：[https://zhuzhenfang.com/element-rush/](https://zhuzhenfang.com/element-rush/)
+- 🔗 **GitHub Pages**：[https://zhenfangzhu.github.io/element-rush/](https://zhenfangzhu.github.io/element-rush/)
 - 💻 **本地单人体验**：直接在浏览器中打开 `index.html`
 - 🌐 **局域网双人对战**：在项目目录运行：
 
@@ -25,7 +26,7 @@ npm start
 - **位置拼图**：在周期表中找到元素的位置
 - **双人对战**：两台同一局域网内的设备使用房间号对战
 - **探索地图**：答对的元素会在周期表上被点亮
-- **全网打榜**：支持全网实时排行榜（Supabase 云端同步），比比谁的速度更快、得分更高
+- **全网打榜**：三大挑战模式独立排行榜（Supabase 云端实时同步），比比谁的速度更快、得分更高
 - **本地记录**：学习天数、最高分和已认识元素自动保存在浏览器中
 
 ## 双人对战
@@ -36,6 +37,18 @@ Windows 用户可以双击 `start-duo-server.bat`。服务器启动后，同一�
 
 如果 Windows 防火墙阻止访问，可以管理员身份运行 `fix-firewall.bat`，开放本地 TCP 8000 端口。
 
+## 👦 小创作者（Creator）
+
+<p align="center">
+  <img src="assets/creator.jpg" alt="小创作者 孙修宇 与《元素冲冲冲》" width="540" style="border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);" />
+  <br />
+  <em>小学三年级的小朋友 · 孙修宇 在现场展示与体验由自己构思设计的《元素冲冲冲》</em>
+</p>
+
+- **创意与设计**：孙修宇（开学小学三年级）
+- **创作初衷**：觉得死记硬背周期表太无聊，希望做成一个好玩、能跟同学比速度的闯关游戏。
+- **开发过程**：小朋友提出完整玩法规则与交互构想，与 AI 结对编程独立协作完成。
+
 ## 为什么开源
 
 这个项目想留下的不只是一个小游戏，也是一件真实发生的小事：一个孩子有了想法，可以和 AI 一起把它做成可以被别人使用的软件。
@@ -44,7 +57,7 @@ Windows 用户可以双击 `start-duo-server.bat`。服务器启动后，同一�
 
 ## 隐私
 
-游戏不会上传学习记录或个人信息。单人进度仅保存在当前浏览器的 `localStorage` 中；双人模式只在你主动启动的本地局域网服务器中运行。
+游戏不会上传隐私信息。单人学习记录保存在当前浏览器的 `localStorage` 中；全网排行榜仅保存玩家自定义昵称与挑战成绩；双人模式只在本地局域网内运行。
 
 ## License
 
