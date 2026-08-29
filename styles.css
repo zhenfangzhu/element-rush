@@ -716,16 +716,53 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
   color: var(--muted);
   font-size: 13px;
   font-weight: 600;
 }
-footer span {
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+footer span.brand-text {
   font-weight: 900;
   color: var(--green);
 }
 footer p {
   margin: 0;
+}
+
+.site-stats {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-alt);
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.stat-pill svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--muted);
+  flex: none;
+}
+.stat-pill strong {
+  color: var(--ink);
+  font-weight: 900;
 }
 
 /* ==================== Modal Common ==================== */

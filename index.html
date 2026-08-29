@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="通过短回合挑战和元素周期表定位，轻松记住化学元素。" />
     <title>元素冲冲冲｜周期表记忆游戏</title>
-    <link rel="stylesheet" href="styles.css?v=3.0" />
+    <link rel="stylesheet" href="styles.css?v=3.1" />
   </head>
   <body>
     <a class="skip-link" href="#game">跳到游戏</a>
@@ -116,7 +116,22 @@
         </section>
       </main>
 
-      <footer><span>元素冲冲冲</span><p>今天多记一个，考试少慌一点。</p></footer>
+      <footer>
+        <div class="footer-brand">
+          <span class="brand-text">元素冲冲冲</span>
+          <p>今天多记一个，考试少慌一点。</p>
+        </div>
+        <div class="site-stats" aria-label="全网访问统计">
+          <span id="busuanzi_container_site_pv" class="stat-pill" title="全网总浏览次数">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            浏览量 <strong id="busuanzi_value_site_pv">...</strong> 次
+          </span>
+          <span id="busuanzi_container_site_uv" class="stat-pill" title="全网总访客人数">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            访客数 <strong id="busuanzi_value_site_uv">...</strong> 人
+          </span>
+        </div>
+      </footer>
     </div>
 
     <div class="modal" id="quizModal" role="dialog" aria-modal="true" aria-labelledby="quizHeading" hidden>
@@ -231,6 +246,7 @@
       </div>
     </div>
 
-    <script src="app.js?v=3.0"></script>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <script src="app.js?v=3.1"></script>
   </body>
 </html>
