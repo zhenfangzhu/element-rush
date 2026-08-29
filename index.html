@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="通过短回合挑战和元素周期表定位，轻松记住化学元素。" />
     <title>元素冲冲冲｜周期表记忆游戏</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=2.2" />
   </head>
   <body>
     <a class="skip-link" href="#game">跳到游戏</a>
@@ -205,6 +205,13 @@
           <label for="playerNameInput">当前玩家</label>
           <input id="playerNameInput" type="text" maxlength="6" placeholder="输入名字" autocomplete="off" />
         </div>
+        <div class="records-header-row">
+          <span class="cloud-sync-badge" id="cloudSyncStatus"><i class="sync-dot"></i> 全网数据已同步</span>
+          <button class="records-refresh-btn" id="refreshRecordsBtn" type="button" title="刷新全网榜单">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.19"/></svg>
+            刷新
+          </button>
+        </div>
         <div class="records-tabs" aria-label="排行榜分类">
           <button class="records-tab active" type="button" data-tab="speed">最快</button>
           <button class="records-tab" type="button" data-tab="accuracy">正确率</button>
@@ -216,6 +223,6 @@
       </div>
     </div>
 
-    <script src="app.js"></script>
+    <script src="app.js?v=2.2"></script>
   </body>
 </html>

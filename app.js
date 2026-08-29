@@ -79,7 +79,7 @@ function renderQuestion(){
   optRng=duoMode?new SeededRandom(duoSeed+current*7919):null;
   const opts=optRng?seededShuffle([e,...getDistractors(e)],optRng):shuffle([e,...getDistractors(e)]);
   $('answers').innerHTML=''; $('feedback').textContent='';
-  opts.forEach((opt,i)=>{const b=document.createElement('button');b.type='button';b.className='answer-button';b.textContent=`${String.fromCharCode(65+i)}  ${displayValue(opt)}`;b.dataset.number=opt.number;b.addEventListener('click',()=>chooseAnswer(b,opt,e));$('answers').appendChild(b)});
+  opts.forEach((opt,i)=>{const b=document.createElement('button');b.type='button';b.className='answer-button';b.innerHTML=`<span class="opt-badge">${String.fromCharCode(65+i)}</span><span class="opt-text">${displayValue(opt)}</span>`;b.dataset.number=opt.number;b.addEventListener('click',()=>chooseAnswer(b,opt,e));$('answers').appendChild(b)});
   $('questionTile').hidden=false;
   applyCheatMark();
 }
@@ -155,7 +155,7 @@ async function recordRound(score, correct, time) {
 
   // 异步上传至 Supabase 全网公共排行榜
   try {
-    fetch(`${SUPABASE_URL}/rest/v1/leaderboard`, {
+    await fetch(`${SUPABASE_URL}/rest/v1/leaderboard`, {
       method: 'POST',
       headers: {
         'apikey': SUPABASE_KEY,
@@ -170,7 +170,7 @@ async function recordRound(score, correct, time) {
         time_seconds: Number(time),
         mode: (typeof mode !== 'undefined' ? mode : 'symbol')
       })
-    }).catch(e => console.warn('Supabase sync error:', e));
+    });
   } catch (e) {
     console.warn('Supabase record failed:', e);
   }
@@ -186,11 +186,12 @@ async function fetchCloudRecords(tab) {
     } else {
       query = 'select=*&order=score.desc,time_seconds.asc&limit=10';
     }
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/leaderboard?${query}`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/leaderboard?${query}&_t=${Date.now()}`, {
       headers: {
         'apikey': SUPABASE_KEY,
         'Authorization': `Bearer ${SUPABASE_KEY}`
-      }
+      },
+      cache: 'no-store'
     });
     if (!res.ok) throw new Error('Cloud fetch failed');
     const data = await res.json();
@@ -201,6 +202,7 @@ async function fetchCloudRecords(tab) {
       time: Number(d.time_seconds)
     }));
   } catch (e) {
+    console.warn('Cloud fetch error:', e);
     return null;
   }
 }
@@ -233,10 +235,13 @@ function renderList(top, list, empty) {
   });
 }
 
-async function renderRecords() {
-  const list = $('recordsList'), empty = $('recordsEmpty');
-  
-  // 1. 先用本地数据毫秒级展示
+async function renderRecords(showLoading = false) {
+  const list = $('recordsList'), empty = $('recordsEmpty'), status = $('cloudSyncStatus');
+  if (showLoading && status) {
+    status.innerHTML = '<i class="sync-dot loading"></i> 正在拉取全网最新榜单...';
+  }
+
+  // 1. 先用本地数据秒开
   const all = [...records];
   let localTop = [];
   if (recordsTab === 'speed') localTop = all.filter(r => r.correct >= 8).sort((a, b) => a.time - b.time).slice(0, 10);
@@ -248,21 +253,32 @@ async function renderRecords() {
   const cloudData = await fetchCloudRecords(recordsTab);
   if (cloudData && cloudData.length > 0) {
     renderList(cloudData, list, empty);
+    if (status) status.innerHTML = `<i class="sync-dot"></i> 全网数据已同步 (${cloudData.length}条)`;
+  } else if (status) {
+    status.innerHTML = '<i class="sync-dot offline"></i> 本地记录已载入';
   }
 }
 
-$('recordsButton').addEventListener('click',()=>{$('recordsModal').hidden=false;document.body.style.overflow='hidden';renderRecords();$('closeRecords').focus()});
-$('closeRecords').addEventListener('click',()=>closeModal('recordsModal'));
-$('recordsDone').addEventListener('click',()=>closeModal('recordsModal'));
-$('playerNameInput').value=localStorage.getItem('elementPlayerName')||'';
-$('playerNameInput').addEventListener('change',()=>{
-  const v=$('playerNameInput').value.trim().slice(0,6);
-  localStorage.setItem('elementPlayerName',v);
-  $('playerNameInput').value=v;
+$('recordsButton').addEventListener('click', () => {
+  $('recordsModal').hidden = false;
+  document.body.style.overflow = 'hidden';
+  renderRecords(true);
+  $('closeRecords').focus();
 });
-document.querySelectorAll('.records-tab').forEach(t=>t.addEventListener('click',()=>{
-  document.querySelectorAll('.records-tab').forEach(x=>x.classList.remove('active'));
-  t.classList.add('active');recordsTab=t.dataset.tab;renderRecords();
+$('refreshRecordsBtn')?.addEventListener('click', () => renderRecords(true));
+$('closeRecords').addEventListener('click', () => closeModal('recordsModal'));
+$('recordsDone').addEventListener('click', () => closeModal('recordsModal'));
+$('playerNameInput').value = localStorage.getItem('elementPlayerName') || '';
+$('playerNameInput').addEventListener('change', () => {
+  const v = $('playerNameInput').value.trim().slice(0, 6);
+  localStorage.setItem('elementPlayerName', v);
+  $('playerNameInput').value = v;
+});
+document.querySelectorAll('.records-tab').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('.records-tab').forEach(x => x.classList.remove('active'));
+  t.classList.add('active');
+  recordsTab = t.dataset.tab;
+  renderRecords(true);
 }));
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){['quizModal','resultModal','howModal','recordsModal','duoModal'].forEach(id=>{if(!$(id).hidden)closeModal(id)})}if(! $('quizModal').hidden && /^[1-4]$/.test(e.key)){document.querySelectorAll('.answer-button')[Number(e.key)-1]?.click()}});
 
