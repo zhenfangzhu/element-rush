@@ -182,11 +182,11 @@ async function fetchCloudRecords(tab, mode = 'symbol') {
     const modeFilter = `mode=eq.${mode}`;
     let query = '';
     if (tab === 'speed') {
-      query = `select=*&${modeFilter}&correct=gte.8&order=time_seconds.asc,correct.desc&limit=10`;
+      query = `select=*&${modeFilter}&correct=gte.8&order=time_seconds.asc,correct.desc&limit=100`;
     } else if (tab === 'accuracy') {
-      query = `select=*&${modeFilter}&order=correct.desc,time_seconds.asc&limit=10`;
+      query = `select=*&${modeFilter}&order=correct.desc,time_seconds.asc&limit=100`;
     } else {
-      query = `select=*&${modeFilter}&order=score.desc,time_seconds.asc&limit=10`;
+      query = `select=*&${modeFilter}&order=score.desc,time_seconds.asc&limit=100`;
     }
     const res = await fetch(`${SUPABASE_URL}/rest/v1/leaderboard?${query}`, {
       headers: {
@@ -248,15 +248,15 @@ async function renderRecords(showLoading = false) {
     status.innerHTML = '<i class="sync-dot loading"></i> 正在拉取全网最新榜单...';
   }
 
-  // 1. 先用本地对应模式的数据秒开
+  // 1. 先用本地对应模式的数据秒开 (前 100 名)
   const all = records.filter(r => (r.mode || 'symbol') === recordsModeTab);
   let localTop = [];
-  if (recordsTab === 'speed') localTop = all.filter(r => r.correct >= 8).sort((a, b) => a.time - b.time).slice(0, 10);
-  else if (recordsTab === 'accuracy') localTop = all.sort((a, b) => b.correct - a.correct || a.time - b.time).slice(0, 10);
-  else localTop = all.sort((a, b) => b.score - a.score || a.time - b.time).slice(0, 10);
+  if (recordsTab === 'speed') localTop = all.filter(r => r.correct >= 8).sort((a, b) => a.time - b.time).slice(0, 100);
+  else if (recordsTab === 'accuracy') localTop = all.sort((a, b) => b.correct - a.correct || a.time - b.time).slice(0, 100);
+  else localTop = all.sort((a, b) => b.score - a.score || a.time - b.time).slice(0, 100);
   renderList(localTop, list, empty);
 
-  // 2. 异步拉取 Supabase 对应模式的全网实时排行榜刷新
+  // 2. 异步拉取 Supabase 对应模式的全网实时排行榜刷新 (前 100 名)
   const cloudData = await fetchCloudRecords(recordsTab, recordsModeTab);
   if (cloudData && cloudData.length > 0) {
     renderList(cloudData, list, empty);
