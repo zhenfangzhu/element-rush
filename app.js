@@ -45,8 +45,9 @@ document.querySelectorAll('.mode-card').forEach(btn=>btn.addEventListener('click
   $('levelNumber').textContent=mode==='symbol'?'01':mode==='number'?'02':mode==='position'?'03':'VS';
 }));
 
-function shuffle(arr){return [...arr].sort(()=>Math.random()-.5)}
 function startGame(){
+  duoMode = false;
+  if ($('duoHud')) $('duoHud').hidden = true;
   const limit=Number($('rangeSelect').value); pool=elements.filter(e=>e.number<=limit);
   questions=shuffle(pool).slice(0,10); current=score=combo=maxCombo=correct=0; lives=3; locked=false; roundStart=Date.now();
   $('quizModal').hidden=false; document.body.style.overflow='hidden'; renderQuestion(); $('closeQuiz').focus();

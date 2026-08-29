@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="通过短回合挑战和元素周期表定位，轻松记住化学元素。" />
     <title>元素冲冲冲｜周期表记忆游戏</title>
-    <link rel="stylesheet" href="styles.css?v=2.7" />
+    <link rel="stylesheet" href="styles.css?v=2.9" />
   </head>
   <body>
     <a class="skip-link" href="#game">跳到游戏</a>
@@ -130,7 +130,7 @@
           <div class="lives" id="lives" aria-label="剩余三次机会"></div>
         </div>
         <div class="score-strip"><span>得分 <strong id="score">0</strong></span><span class="combo" id="combo">连击 × 0</span><span>第 <strong id="round">1</strong>/10 题</span></div>
-        <div class="duo-hud" id="duoHud" hidden>
+        <div class="duo-hud" id="duoHud" hidden style="display: none !important;">
           <div class="duo-side duo-self"><span>你</span><strong id="selfScoreDuo">0</strong><div class="duo-bar"><i id="selfProgressDuo"></i></div></div>
           <div class="duo-center"><div class="duo-vs">VS</div><div class="duo-timer" id="duoTimer">60</div></div>
           <div class="duo-side duo-opp"><span id="opponentName">对手</span><strong id="opponentScore">0</strong><div class="duo-bar"><i id="opponentProgress"></i></div></div>
@@ -231,6 +231,6 @@
       </div>
     </div>
 
-    <script src="app.js?v=2.8"></script>
+    <script src="app.js?v=2.9"></script>
   </body>
 </html>

@@ -729,7 +729,7 @@ footer p {
 }
 
 /* ==================== Modal Common ==================== */
-.modal[hidden] {
+[hidden], .modal[hidden], .duo-hud[hidden] {
   display: none !important;
 }
 .modal {
