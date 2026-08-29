@@ -186,14 +186,14 @@ async function fetchCloudRecords(tab) {
     } else {
       query = 'select=*&order=score.desc,time_seconds.asc&limit=10';
     }
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/leaderboard?${query}&_t=${Date.now()}`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/leaderboard?${query}`, {
       headers: {
         'apikey': SUPABASE_KEY,
         'Authorization': `Bearer ${SUPABASE_KEY}`
       },
       cache: 'no-store'
     });
-    if (!res.ok) throw new Error('Cloud fetch failed');
+    if (!res.ok) throw new Error(`Cloud fetch failed with status ${res.status}`);
     const data = await res.json();
     return data.map(d => ({
       name: d.player_name,
