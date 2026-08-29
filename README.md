@@ -1,64 +1,97 @@
+<div align="center">
+
 # 元素冲冲冲 · Element Rush
 
-> 你有多久没有想起过化学元素周期表？你还记得吗？
+[中文](#-中文介绍) | [English](#-english-version)
 
-这是一个由**开学三年级的小朋友**提出想法、设计玩法，并在 AI 的帮助下完成的化学元素记忆小游戏。
-
-它把“背元素周期表”变成了短回合挑战：看符号、认名字、找位置，在游戏里一点点认识 118 个元素。
-
-## 在线体验
-
-- 🌟 **专属在线地址**：[https://zhuzhenfang.com/element-rush/](https://zhuzhenfang.com/element-rush/)
-- 🔗 **GitHub Pages**：[https://zhenfangzhu.github.io/element-rush/](https://zhenfangzhu.github.io/element-rush/)
-- 💻 **本地单人体验**：直接在浏览器中打开 `index.html`
-- 🌐 **局域网双人对战**：在项目目录运行：
-
-```bash
-npm start
-```
-
-然后访问 [http://localhost:8000](http://localhost:8000)。
-
-## 玩法
-
-- **符号速答**：看到元素符号，选出正确名称
-- **序号侦探**：根据原子序数寻找元素
-- **位置拼图**：在周期表中找到元素的位置
-- **双人对战**：两台同一局域网内的设备使用房间号对战
-- **探索地图**：答对的元素会在周期表上被点亮
-- **全网打榜**：三大挑战模式独立排行榜（Supabase 云端实时同步），比比谁的速度更快、得分更高
-- **本地记录**：学习天数、最高分和已认识元素自动保存在浏览器中
-
-## 双人对战
-
-双人模式需要 [Node.js](https://nodejs.org/) 18 或更高版本，不需要安装第三方依赖。
-
-Windows 用户可以双击 `start-duo-server.bat`。服务器启动后，同一局域网内的另一台设备访问终端中显示的地址即可加入。
-
-如果 Windows 防火墙阻止访问，可以管理员身份运行 `fix-firewall.bat`，开放本地 TCP 8000 端口。
-
-## 👦 小创作者（Creator）
+> **你有多久没有想起过化学元素周期表？你还记得吗？**  
+> *When was the last time you thought about the Periodic Table? Do you still remember it?*
 
 <p align="center">
-  <img src="assets/creator.jpg" alt="小创作者 孙修宇 与《元素冲冲冲》" width="540" style="border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);" />
+  <img src="assets/creator.jpg" alt="小创作者 孙修宇 与《元素冲冲冲》" width="560" style="border-radius: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.15);" />
   <br />
   <em>小学三年级的小朋友 · 孙修宇 在现场展示与体验由自己构思设计的《元素冲冲冲》</em>
 </p>
+
+</div>
+
+---
+
+## 🇨🇳 中文介绍
+
+这是一个由**开学三年级的小朋友（孙修宇）**提出想法、设计玩法，并在 AI 结对编程协作下完成的化学元素周期表记忆游戏。
+
+它把原本枯燥的“死记硬背元素周期表”变成了趣味十足的短回合闯关：**看符号、认名字、找位置**，在轻松的游戏过程中让 118 个化学元素从陌生人变成老朋友。
+
+### 🎮 在线体验
+
+- 🌟 **专属在线网址**：[https://zhuzhenfang.com/element-rush/](https://zhuzhenfang.com/element-rush/)
+- 🔗 **GitHub Pages**：[https://zhenfangzhu.github.io/element-rush/](https://zhenfangzhu.github.io/element-rush/)
+- 💻 **本地单人体验**：直接在浏览器中打开 `index.html`
+- 🌐 **局域网双人对战**：在项目目录运行 `npm start` 后访问 [http://localhost:8000](http://localhost:8000)。
+
+### 🕹️ 玩法特色
+
+- **🧪 符号速答**：看到元素符号，快速选出正确名称与拼音
+- **🔢 序号侦探**：根据原子序数寻找对应的化学元素
+- **🧩 位置拼图**：在周期表中定位元素所在的周期与族
+- **👥 双人对战**：两台同一局域网内的设备使用房间号即时 PK
+- **🗺️ 探索地图**：答对的元素会在 118 周期表探索地图上永久点亮
+- **🏆 全网打榜**：三大挑战模式独立排行榜（Supabase 云端实时同步，支持前 100 名最快速度、正确率与高分角逐）
+- **📈 本地记录**：学习天数、最高分和已认识元素自动保存在本地
+
+### 👦 小创作者（Creator）
 
 - **创意与设计**：孙修宇（开学小学三年级）
 - **创作初衷**：觉得死记硬背周期表太无聊，希望做成一个好玩、能跟同学比速度的闯关游戏。
 - **开发过程**：小朋友提出完整玩法规则与交互构想，与 AI 结对编程独立协作完成。
 
-## 为什么开源
+### 💡 为什么开源
 
-这个项目想留下的不只是一个小游戏，也是一件真实发生的小事：一个孩子有了想法，可以和 AI 一起把它做成可以被别人使用的软件。
+这个项目想留下的不只是一个小游戏，也是一件真实发生的小事：**一个孩子有了想法，可以和 AI 一起把它做成可以被别人使用的软件。**
 
 如果它也让你重新想起元素周期表，或者让另一个孩子开始动手创造，那它就已经值得存在。
 
-## 隐私
+---
 
-游戏不会上传隐私信息。单人学习记录保存在当前浏览器的 `localStorage` 中；全网排行榜仅保存玩家自定义昵称与挑战成绩；双人模式只在本地局域网内运行。
+## 🌍 English Version
 
-## License
+**Element Rush** is a fun, interactive Periodic Table learning and speed-challenge web game conceived and designed by **Sun Xiuyu (a 3rd grade elementary school student)** and built in collaboration with AI pair programming.
 
-[MIT](LICENSE)
+It transforms tedious chemistry memorization into exciting, bite-sized 60-second challenges: **recognizing atomic symbols, identifying atomic numbers, and pinpointing positions on the periodic table**.
+
+### 🎮 Live Demo
+
+- 🌟 **Live Website**: [https://zhuzhenfang.com/element-rush/](https://zhuzhenfang.com/element-rush/)
+- 🔗 **GitHub Pages**: [https://zhenfangzhu.github.io/element-rush/](https://zhenfangzhu.github.io/element-rush/)
+- 💻 **Local Play**: Simply open `index.html` in any web browser.
+- 🌐 **LAN Multiplayer**: Run `npm start` in the project directory and visit `http://localhost:8000`.
+
+### ✨ Game Features
+
+- **🧪 Symbol Rush**: See the chemical symbol (e.g. `Fe`), identify the element name & pinyin.
+- **🔢 Atomic Detective**: Look at the atomic number (e.g. `26`), find the corresponding element.
+- **🧩 Periodic Grid**: Pinpoint the exact period & group position on the periodic table.
+- **👥 Local Duo Battle**: Real-time 1v1 multiplayer over local Wi-Fi with room codes.
+- **🗺️ Interactive Map**: Light up all 118 elements on the periodic table as you answer correctly.
+- **🏆 Global Leaderboard**: Real-time cloud rankings powered by Supabase (supporting Top 100 fastest times, accuracy, and high scores across all 3 modes).
+- **📱 Responsive Neo-Brutalist UI**: Beautifully optimized for mobile touchscreens and desktop screens alike.
+
+### 👦 The Young Creator
+
+- **Creator & Game Designer**: Sun Xiuyu (3rd Grade Student)
+- **Inspiration**: Wanted to make memorizing chemistry fun and engaging so kids and students can race with classmates instead of memorizing dry charts.
+- **How it was built**: The student conceived the rules, visual layout, and game flow, pairing with AI to write and refine the production-ready code.
+
+### 💡 Why Open Source?
+
+This repository represents more than just a game—it documents a real milestone: **a child with an idea empowered by AI to build software that anyone around the world can play.**
+
+If this inspires you to revisit chemistry, or sparks another child's curiosity to start creating, it has accomplished its purpose.
+
+---
+
+## 🔒 Privacy & License
+
+- **Privacy**: No tracking or private data collection. Offline progress is saved in local browser storage; cloud leaderboards only record custom player nicknames and scores.
+- **License**: Released under the [MIT License](LICENSE). Free to use, learn, and modify!
