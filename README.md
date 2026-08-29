@@ -8,9 +8,9 @@
 
 ## 在线体验
 
-直接打开 `index.html` 即可开始单人游戏。
-
-也可以在项目目录运行：
+- 🎮 **在线直接玩**：[https://zhenfangzhu.github.io/element-rush/](https://zhenfangzhu.github.io/element-rush/)（或 [https://zhuzhenfang.com/element-rush/](https://zhuzhenfang.com/element-rush/)）
+- 💻 **本地单人体验**：直接在浏览器中打开 `index.html`
+- 🌐 **局域网双人对战**：在项目目录运行：
 
 ```bash
 npm start
