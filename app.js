@@ -267,12 +267,25 @@ $('recordsButton').addEventListener('click', () => {
 });
 $('refreshRecordsBtn')?.addEventListener('click', () => renderRecords(true));
 $('closeRecords').addEventListener('click', () => closeModal('recordsModal'));
-$('recordsDone').addEventListener('click', () => closeModal('recordsModal'));
+$('recordsDone').addEventListener('click', () => {
+  const v = $('playerNameInput').value.trim().slice(0, 6);
+  localStorage.setItem('elementPlayerName', v);
+  $('playerNameInput').value = v;
+  closeModal('recordsModal');
+});
 $('playerNameInput').value = localStorage.getItem('elementPlayerName') || '';
 $('playerNameInput').addEventListener('change', () => {
   const v = $('playerNameInput').value.trim().slice(0, 6);
   localStorage.setItem('elementPlayerName', v);
   $('playerNameInput').value = v;
+});
+$('playerNameInput').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    const v = $('playerNameInput').value.trim().slice(0, 6);
+    localStorage.setItem('elementPlayerName', v);
+    $('playerNameInput').value = v;
+    closeModal('recordsModal');
+  }
 });
 document.querySelectorAll('.records-tab').forEach(t => t.addEventListener('click', () => {
   document.querySelectorAll('.records-tab').forEach(x => x.classList.remove('active'));
