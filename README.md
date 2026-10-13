@@ -25,8 +25,7 @@
 
 ### 🎮 在线体验
 
-- 🌟 **专属在线网址**：[https://zhuzhenfang.com/element-rush/](https://zhuzhenfang.com/element-rush/)
-- 🔗 **GitHub Pages**：[https://zhenfangzhu.github.io/element-rush/](https://zhenfangzhu.github.io/element-rush/)
+- 🌟 **在线体验 / GitHub Pages**：[https://zhenfangzhu.github.io/element-rush/](https://zhenfangzhu.github.io/element-rush/)
 - 💻 **本地单人体验**：直接在浏览器中打开 `index.html`
 - 🌐 **局域网双人对战**：在项目目录运行 `npm start` 后访问 [http://localhost:8000](http://localhost:8000)。
 
@@ -62,8 +61,7 @@ It transforms tedious chemistry memorization into exciting, bite-sized 60-second
 
 ### 🎮 Live Demo
 
-- 🌟 **Live Website**: [https://zhuzhenfang.com/element-rush/](https://zhuzhenfang.com/element-rush/)
-- 🔗 **GitHub Pages**: [https://zhenfangzhu.github.io/element-rush/](https://zhenfangzhu.github.io/element-rush/)
+- 🌟 **Live demo / GitHub Pages**: [https://zhenfangzhu.github.io/element-rush/](https://zhenfangzhu.github.io/element-rush/)
 - 💻 **Local Play**: Simply open `index.html` in any web browser.
 - 🌐 **LAN Multiplayer**: Run `npm start` in the project directory and visit `http://localhost:8000`.
 
@@ -95,3 +93,9 @@ If this inspires you to revisit chemistry, or sparks another child's curiosity t
 
 - **Privacy**: No tracking or private data collection. Offline progress is saved in local browser storage; cloud leaderboards only record custom player nicknames and scores.
 - **License**: Released under the [MIT License](LICENSE). Free to use, learn, and modify!
+
+## 反馈 / Feedback
+
+遇到问题或有玩法建议，请在 [Issues](https://github.com/zhenfangzhu/element-rush/issues) 中提供复现步骤、浏览器及设备信息。
+
+For bug reports or gameplay suggestions, open an issue with reproduction steps and your browser and device details.
