@@ -19,7 +19,7 @@
 
 ## 🇨🇳 中文介绍
 
-这是一个由**开学三年级的小朋友**提出想法、设计玩法，并在 AI 结对编程协作下完成的化学元素周期表记忆游戏。
+我在这里分享《元素冲冲冲》：一个由**开学三年级的小朋友**提出想法、设计玩法，并在 AI 结对编程协作下完成的化学元素周期表记忆游戏。
 
 它把原本枯燥的“死记硬背元素周期表”变成了趣味十足的短回合闯关：**看符号、认名字、找位置**，在轻松的游戏过程中让 118 个化学元素从陌生人变成老朋友。
 
@@ -47,15 +47,15 @@
 
 ### 💡 为什么开源
 
-这个项目想留下的不只是一个小游戏，也是一件真实发生的小事：**一个孩子有了想法，可以和 AI 一起把它做成可以被别人使用的软件。**
+我希望通过这个项目记录一件真实发生的小事：**一个孩子有了想法，可以和 AI 一起把它做成可以被别人使用的软件。**
 
-如果它也让你重新想起元素周期表，或者让另一个孩子开始动手创造，那它就已经值得存在。
+如果它也让你重新想起元素周期表，或者让另一个孩子开始动手创造，我会觉得这份分享很有意义。
 
 ---
 
 ## 🌍 English Version
 
-**Element Rush** is a fun, interactive Periodic Table learning and speed-challenge web game conceived and designed by **a 3rd grade elementary school student** and built in collaboration with AI pair programming.
+I share **Element Rush** here: an interactive Periodic Table learning and speed-challenge web game conceived and designed by **a 3rd grade elementary school student** and built in collaboration with AI pair programming.
 
 It transforms tedious chemistry memorization into exciting, bite-sized 60-second challenges: **recognizing atomic symbols, identifying atomic numbers, and pinpointing positions on the periodic table**.
 
@@ -83,9 +83,9 @@ It transforms tedious chemistry memorization into exciting, bite-sized 60-second
 
 ### 💡 Why Open Source?
 
-This repository represents more than just a game—it documents a real milestone: **a child with an idea empowered by AI to build software that anyone around the world can play.**
+Through this project, I want to document something that happened: **a child with an idea empowered by AI to build software that anyone around the world can play.**
 
-If this inspires you to revisit chemistry, or sparks another child's curiosity to start creating, it has accomplished its purpose.
+If this inspires you to revisit chemistry, or sparks another child's curiosity to start creating, I will consider it well worth sharing.
 
 ---
 
@@ -96,6 +96,6 @@ If this inspires you to revisit chemistry, or sparks another child's curiosity t
 
 ## 反馈 / Feedback
 
-遇到问题或有玩法建议，请在 [Issues](https://github.com/zhenfangzhu/element-rush/issues) 中提供复现步骤、浏览器及设备信息。
+如果你遇到问题或有玩法建议，欢迎在 [Issues](https://github.com/zhenfangzhu/element-rush/issues) 中告诉我，并提供复现步骤、浏览器及设备信息。
 
-For bug reports or gameplay suggestions, open an issue with reproduction steps and your browser and device details.
+If you find a bug or have a gameplay suggestion, please let me know by opening an issue with reproduction steps and your browser and device details.
